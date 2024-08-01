@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Web App</title>
+</head>
+<body>
+    <h1>Simple Web App</h1>
+    <form id="myForm">
+        <label for="token">Token:</label><br>
+        <input type="text" id="token" name="token" value="666f7f95ef93326dba001c82"><br>
+        <label for="netid">NetID:</label><br>
+        <input type="text" id="netid" name="netid" value="CM99V122139007597"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <textarea id="output" rows="10" cols="50"></textarea>
+    <script>
+        document.getElementById('myForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            let token = document.getElementById('token').value;
+            let netid = document.getElementById('netid').value;
+            let response = await fetch(`/get_data?token=${token}&netid=${netid}`);
+            let data = await response.text();
+            document.getElementById('output').value = data;
+        });
+    </script>
+</body>
+</html>
