@@ -12,7 +12,7 @@ app.jinja_env.filters['datetimeformat'] = datetimeformat
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index2.html')
 
 @app.route('/get_data')
 def get_data():
@@ -23,7 +23,18 @@ def get_data():
     url = f"https://app.alphax.cloud/getPathData?token={token}&netid={netid}&fcdt={fcdt}&tcdt={tcdt}"
     response = requests.get(url)
     data = response.json()
-    return render_template('index.html', data=data)
+    return render_template('index2.html', data=data)
+
+@app.route('/get_data2')
+def get_data2():
+    token = request.args.get('token')
+    netid = request.args.get('netid')
+    fcdt = request.args.get('fcdt')
+    tcdt = request.args.get('tcdt')
+    url = f"https://app.alphax.cloud/getPathData?token={token}&netid={netid}&fcdt={fcdt}&tcdt={tcdt}"
+    response = requests.get(url)
+    data = response.json()
+    return render_template('index2.html', data=data)
 
 if __name__ == '__main__':
     app.run(debug=True)

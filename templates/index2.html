@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Web App</title>
+    <title>Simple Web App with Canvas</title>
 </head>
 <body>
     <h1>Simple Web App</h1>
-    <form action="/get_data" method="get">
+    <form action="/get_data2" method="get">
         <label for="token">Token:</label><br>
         <input type="text" id="token" name="token" value="666f7f95ef93326dba001c82"><br>
         <label for="netid">NetID:</label><br>
@@ -29,30 +29,30 @@
         <p><strong>Code:</strong> {{ data.code }}</p>
         <p><strong>Error:</strong> {{ data.error }}</p>
         <h3>Path Data:</h3>
-        {% for item in data.pathData %}
-        <div>
-            <p><strong>Item {{ loop.index }}:</strong></p>
-            <p><strong>Network ID:</strong> {{ item.networkId }}</p>
-            <p><strong>Timestamp:</strong> {{ item.timestamp }} ({{ item.timestamp | datetimeformat }})</p>
-            <p><strong>Data:</strong></p>
-            {% for d in item.data %}
-            {% if d.channelId != 253 %}
-            <div>
-                <p><strong>Channel ID:</strong> {{ d.channelId }}</p>
-                <p><strong>Value:</strong> {% if d.value is iterable %}{{ d.value | join(', ') }}{% else %}{{ d.value }}{% endif %}</p>
-                <p><strong>Start Timestamp:</strong> {{ d.startTimestamp }} ({{ d.startTimestamp | datetimeformat }})</p>
-                <p><strong>End Timestamp:</strong> {{ d.endTimestamp }} ({{ d.endTimestamp | datetimeformat }})</p>
-                <p><strong>Total Time:</strong> {{ d.totalTime }}</p>
-                <p><strong>Total Distance:</strong> {{ d.totalDistance }}</p>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        <hr />
-        {% endfor %}
+        <canvas id="myCanvas" width="800" height="600" style="border:1px solid #000000;"></canvas>
+        <script>
+            function drawDots(data) {
+                var canvas = document.getElementById('myCanvas');
+                var context = canvas.getContext('2d');
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                data.pathData.forEach(function(item, index) {
+                    item.data.forEach(function(d) {
+                        if (d.channelId != 253) {
+                            d.value.forEach(function(point) {
+                                var x = point[0];
+                                var y = point[1];
+                                context.fillStyle = 'red';
+                                context.beginPath();
+                                context.arc(x, y, 2, 0, 2 * Math.PI);
+                                context.fill();
+                            });
+                        }
+                    });
+                });
+            }
+            drawDots({{ data | tojson }});
+        </script>
     </div>
-    <h3>Raw Response:</h3>
-    <textarea rows="10" cols="50">{{ data | tojson }}</textarea>
     {% endif %}
     <script>
         function setLastHour() {
