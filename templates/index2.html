@@ -37,11 +37,18 @@
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 data.pathData.forEach(function(item, index) {
                     item.data.forEach(function(d) {
+                        var col = "red"
+                        if (d.channelId == 1) {
+                            col = "blue"
+                        }
+                        if (d.channelId == 2) {
+                            col = "green"
+                        }
                         if (d.channelId != 253) {
                             d.value.forEach(function(point) {
                                 var x = point[0];
                                 var y = point[1];
-                                context.fillStyle = 'red';
+                                context.fillStyle = col;
                                 context.beginPath();
                                 context.arc(x, y, 2, 0, 2 * Math.PI);
                                 context.fill();

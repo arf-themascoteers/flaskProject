@@ -9,11 +9,11 @@
         <label for="token">Token:</label><br>
         <input type="text" id="token" name="token" value="666f7f95ef93326dba001c82"><br>
         <label for="netid">NetID:</label><br>
-        <input type="text" id="netid" name="netid" value="CM99V122139007597"><br>
+        <input type="text" id="netid" name="netid" value="{{ request.args.get('netid',"CM99V122139007597") }}"><br>
         <label for="fcdt">FCDT:</label><br>
-        <input type="text" id="fcdt" name="fcdt" value=""><br>
+        <input type="text" id="fcdt" name="fcdt" value="{{ request.args.get('fcdt', '') }}"><br>
         <label for="tcdt">TCDT:</label><br>
-        <input type="text" id="tcdt" name="tcdt" value=""><br><br>
+        <input type="text" id="tcdt" name="tcdt" value="{{ request.args.get('tcdt', '') }}"><br><br>
         <input type="submit" value="Submit">
         <button type="button" onclick="setLastHour()">Last hour</button>
     </form>
@@ -28,20 +28,19 @@
         <h2>Response:</h2>
         <p><strong>Code:</strong> {{ data.code }}</p>
         <p><strong>Error:</strong> {{ data.error }}</p>
+        <p><strong>Number of Items:</strong> {{ data.pathData | length }}</p>
         <h3>Path Data:</h3>
         {% for item in data.pathData %}
         <div>
             <p><strong>Item {{ loop.index }}:</strong></p>
             <p><strong>Network ID:</strong> {{ item.networkId }}</p>
-            <p><strong>Timestamp:</strong> {{ item.timestamp }} ({{ item.timestamp | datetimeformat }})</p>
+            <p><strong>Timestamp:</strong> {{ item.timestamp }} ({{ item.timestamp | datetimeformat13 }})</p>
             <p><strong>Data:</strong></p>
             {% for d in item.data %}
             {% if d.channelId != 253 %}
             <div>
                 <p><strong>Channel ID:</strong> {{ d.channelId }}</p>
                 <p><strong>Value:</strong> {% if d.value is iterable %}{{ d.value | join(', ') }}{% else %}{{ d.value }}{% endif %}</p>
-                <p><strong>Start Timestamp:</strong> {{ d.startTimestamp }} ({{ d.startTimestamp | datetimeformat }})</p>
-                <p><strong>End Timestamp:</strong> {{ d.endTimestamp }} ({{ d.endTimestamp | datetimeformat }})</p>
                 <p><strong>Total Time:</strong> {{ d.totalTime }}</p>
                 <p><strong>Total Distance:</strong> {{ d.totalDistance }}</p>
             </div>

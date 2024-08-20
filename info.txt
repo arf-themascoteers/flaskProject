@@ -1,0 +1,29 @@
+https://minnovation-1.gitbook.io/future-mobility-data/
+
+
+
+Future Mobility Token: 666f7f95ef93326dba001c82
+
+
+
+Future Mobility Devices (netID):
+
+
+
+CM99V122139007597
+
+CM27V122149004668
+
+CM99V122113000052
+
+
+
+They can access more data here to give them further context:
+
+
+
+https://app.alphax.cloud/dashboard?id=66565eee68d6b1e1220b0974
+
+https://app.alphax.cloud/dashboard?id=6656df3978d4986ef7054e78
+
+https://app.alphax.cloud/dashboard?id=6656e007c5a3c939d10983f4
